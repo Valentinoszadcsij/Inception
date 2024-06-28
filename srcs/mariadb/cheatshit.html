@@ -15,4 +15,6 @@ docker ps : lists running containers, add "-a" to list all containers
 docker logs <container_name_or_id> : view container logs
 docker stop <name_or_id> : stops the running container
 docker rm <container_name_or_id> : delete a container
+docker rm $(docker ps -aq) : delete all containers
+docker rmi $(docker images -q) : delete all images
 docker container prune : removes all stopped containers
