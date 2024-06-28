@@ -7,10 +7,17 @@ set -e
 # fi
 
 # start MariaDB service 
-mysqld_safe --datadir=/var/lib/mysql
-echo "hello world" > hello-world.txt
+mysqld_safe --datadir=/var/lib/mysql &
+while ! mysqladmin ping --silent; do
+    sleep 1
+done
+
 # create database and user
+echo "creating DB and user" > /var/lib/mysql/test
 mysql -e "CREATE DATABASE IF NOT EXISTS $MARIADB_DATABASE;"
 mysql -e "CREATE USER IF NOT EXISTS '$MARIADB_USER'@'%' IDENTIFIED BY '$MARIADB_PASSWORD';"
 mysql -e "GRANT ALL PRIVILEGES ON $MARIADB_DATABASE.* TO '$MARIADB_USER'@'%';"
 mysql -e "FLUSH PRIVILEGES;"
+
+mysqladmin shutdown
+exec mysqld_safe --datadir=/var/lib/mysql
