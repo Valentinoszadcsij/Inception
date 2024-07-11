@@ -9,5 +9,4 @@ build:
 clean:
 	$(COMPOSE) down
 	docker rmi $(shell $(COMPOSE) images -q)
-re:	clean
-	$(MAKE) up
+re:	clean up

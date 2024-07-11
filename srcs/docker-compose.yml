@@ -4,5 +4,7 @@ services:
   mariadb:
     build: ./mariadb
     image: mariadb
+    container_name: "mariadb"
     ports: 
       -  "3306:3306"
+    env_file: "./mariadb/.env"
