@@ -11,6 +11,7 @@ set -e :  in a shell script is used to instruct the shell to immediately exit if
 https://docs.docker.com/engine/reference/run/ - documenation
 docker build -t <image_name> . r: build the image
 docker run --env-file <env_file> -d <image_name> : run container passing env variables from a file
+docker exec -it <containername> bash : attaches to container and runs bash
 docker ps : lists running containers, add "-a" to list all containers
 docker logs <container_name_or_id> : view container logs
 docker stop <name_or_id> : stops the running container
