@@ -2,10 +2,13 @@ COMPOSE		= docker compose -f srcs/docker-compose.yml
 
 all: build up
 
-up: build
+up: volume build
 	$(COMPOSE) up
 build:
 	$(COMPOSE) build
+# for now this is a path on MacOs, later need to change to home/user_name/data on VM
+volume:
+	mkdir -p /Users/voszadcs/Documents/data
 clean:
 	$(COMPOSE) down
 	docker stop $(shell docker ps -qa) || true
