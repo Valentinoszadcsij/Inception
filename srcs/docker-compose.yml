@@ -7,9 +7,12 @@ services:
       -  "3306:3306"
     env_file: ".env"
     volumes:
-      - type: bind
-        source: /Users/voszadcs/Documents/data
-        target: /var/lib/mysql
+     - wp_db:/var/lib/mysql
 
 volumes:
   wp_db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/voszadcs/Documents/data
