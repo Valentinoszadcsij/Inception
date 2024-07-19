@@ -3,11 +3,29 @@ services:
     build: ./requirements/mariadb
     image: mariadb
     container_name: "mariadb"
+    restart: always
     ports: 
       -  "3306:3306"
     env_file: ".env"
     volumes:
      - wp_db:/var/lib/mysql
+    networks:
+      - inception
+
+  wordpress:
+    build: ./requirements/wordpress
+    image: wordpress
+    container_name: "wordpress"
+    restart: always
+    ports:
+      - "9000:9000"
+    env_file: ".env"
+    volumes:
+      - wp_files:/var/www/html
+    depends_on: 
+      - mariadb
+    networks:
+      - inception
 
 volumes:
   wp_db:
@@ -16,3 +34,13 @@ volumes:
       type: none
       o: bind
       device: /home/voszadcs/data/wp_db
+  wp_files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/voszadcs/data/wp_files
+
+networks:
+    inception:
+      driver: bridge
