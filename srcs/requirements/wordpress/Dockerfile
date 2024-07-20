@@ -1,4 +1,3 @@
-# Use Debian Bullseye as the base image
 FROM debian:bullseye
 
 # Set environment variables for non-interactive installation
