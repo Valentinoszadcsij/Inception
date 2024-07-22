@@ -2,12 +2,14 @@
 set -e
 
 # initialize MariaDB
+echo "Running MariaDB init script"
 mkdir -p /run/mysqld
-chown -R mysql:mysql /run/mysqld # socket files will be created here
+chown -R mysql:mysql /run/mysqld
+
 echo "Initializing DB"
 if [ ! -d /var/lib/mysql/mysql ]; then
     echo "Initializing MariaDB data directory..."
-	mysql_install_db --user=mysql --datadir=/var/lib/mysql # Mariadb data directory
+    mysql_install_db --user=mysql --datadir=/var/lib/mysql
 fi
 
 # start MariaDB service 
@@ -29,7 +31,6 @@ mysql -u root -p"$MARIADB_ROOT_PASSWORD" -e "CREATE USER IF NOT EXISTS '$MARIADB
 mysql -u root -p"$MARIADB_ROOT_PASSWORD" -e "GRANT ALL PRIVILEGES ON $MARIADB_DATABASE.* TO '$MARIADB_USER'@'%';"
 mysql -u root -p"$MARIADB_ROOT_PASSWORD" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MARIADB_ROOT_PASSWORD';"
 mysql -u root -p"$MARIADB_ROOT_PASSWORD" -e "FLUSH PRIVILEGES;"
-
 
 echo "Shutting down MariaDB..."
 mysqladmin -u root -p"$MARIADB_ROOT_PASSWORD" shutdown
